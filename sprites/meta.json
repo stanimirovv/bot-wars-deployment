@@ -1,52 +1,52 @@
 {
   "paper": {
     "walk": {
-      "frameWidth": 542,
+      "frameWidth": 543,
       "frameHeight": 445,
       "frames": 3
     },
     "attack": {
-      "frameWidth": 542,
+      "frameWidth": 543,
       "frameHeight": 469,
       "frames": 3
     },
     "death": {
-      "frameWidth": 542,
-      "frameHeight": 452,
+      "frameWidth": 543,
+      "frameHeight": 530,
       "frames": 3
     }
   },
   "rock": {
     "walk": {
       "frameWidth": 234,
-      "frameHeight": 160,
+      "frameHeight": 195,
       "frames": 3
     },
     "attack": {
       "frameWidth": 234,
-      "frameHeight": 158,
+      "frameHeight": 162,
       "frames": 3
     },
     "death": {
       "frameWidth": 234,
-      "frameHeight": 159,
+      "frameHeight": 167,
       "frames": 3
     }
   },
   "scissors": {
     "walk": {
-      "frameWidth": 192,
-      "frameHeight": 160,
+      "frameWidth": 228,
+      "frameHeight": 195,
       "frames": 3
     },
     "attack": {
-      "frameWidth": 192,
-      "frameHeight": 148,
+      "frameWidth": 228,
+      "frameHeight": 162,
       "frames": 3
     },
     "death": {
-      "frameWidth": 192,
-      "frameHeight": 150,
+      "frameWidth": 228,
+      "frameHeight": 167,
       "frames": 3
     }
   }
