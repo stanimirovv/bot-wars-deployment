@@ -1,18 +1,18 @@
 {
   "paper": {
     "walk": {
-      "frameWidth": 543,
-      "frameHeight": 445,
+      "frameWidth": 383,
+      "frameHeight": 453,
       "frames": 3
     },
     "attack": {
-      "frameWidth": 543,
-      "frameHeight": 469,
+      "frameWidth": 383,
+      "frameHeight": 470,
       "frames": 3
     },
     "death": {
-      "frameWidth": 543,
-      "frameHeight": 530,
+      "frameWidth": 383,
+      "frameHeight": 468,
       "frames": 3
     }
   },
