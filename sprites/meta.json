@@ -49,5 +49,107 @@
       "frameHeight": 167,
       "frames": 3
     }
+  },
+  "volt_paper": {
+    "walk": {
+      "frameWidth": 450,
+      "frameHeight": 200,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 450,
+      "frameHeight": 200,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 450,
+      "frameHeight": 200,
+      "frames": 3
+    }
+  },
+  "volt_rock": {
+    "walk": {
+      "frameWidth": 900,
+      "frameHeight": 500,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 900,
+      "frameHeight": 500,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 900,
+      "frameHeight": 500,
+      "frames": 3
+    }
+  },
+  "volt_scissors": {
+    "walk": {
+      "frameWidth": 352,
+      "frameHeight": 169,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 352,
+      "frameHeight": 169,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 352,
+      "frameHeight": 169,
+      "frames": 3
+    }
+  },
+  "myco_paper": {
+    "walk": {
+      "frameWidth": 171,
+      "frameHeight": 233,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 361,
+      "frameHeight": 216,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 327,
+      "frameHeight": 233,
+      "frames": 3
+    }
+  },
+  "myco_rock": {
+    "walk": {
+      "frameWidth": 317,
+      "frameHeight": 232,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 341,
+      "frameHeight": 218,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 344,
+      "frameHeight": 223,
+      "frames": 3
+    }
+  },
+  "myco_scissors": {
+    "walk": {
+      "frameWidth": 669,
+      "frameHeight": 466,
+      "frames": 3
+    },
+    "attack": {
+      "frameWidth": 872,
+      "frameHeight": 436,
+      "frames": 3
+    },
+    "death": {
+      "frameWidth": 693,
+      "frameHeight": 433,
+      "frames": 3
+    }
   }
 }
