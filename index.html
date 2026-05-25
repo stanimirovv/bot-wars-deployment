@@ -20,7 +20,9 @@
         align-items: center;
         justify-content: center;
         width: 100vw;
-        height: 100vh;
+        /* Subtract bottom safe-area so the canvas never overlaps the home indicator.
+           On devices without a safe area env() resolves to 0px — no change. */
+        height: calc(100vh - env(safe-area-inset-bottom, 0px));
         touch-action: none;
       }
       canvas {
@@ -34,9 +36,10 @@
         position: fixed;
         top: 0;
         left: 0;
-        /* width = dead space minus right safe-area (canvas no longer extends to screen edge) */
-        width: calc(100vw - 100vh * var(--game-aspect, 1.6516) - env(safe-area-inset-right, 0px));
-        height: 100vh;
+        /* width = dead space minus right safe-area.
+           Canvas height = (100vh - sab), so canvas width = (100vh - sab) * aspect. */
+        width: calc(100vw - (100vh - env(safe-area-inset-bottom, 0px)) * var(--game-aspect, 1.6516) - env(safe-area-inset-right, 0px));
+        height: calc(100vh - env(safe-area-inset-bottom, 0px));
         background: #0b0d12;
         border-right: 1px solid #1e2633;
         box-sizing: border-box;
@@ -59,7 +62,7 @@
            translateX(deadSpace/2 - safeRight) shifts it right, keeping the canvas
            clear of the right safe-area (home indicator / rounded corner zone). */
         canvas {
-          transform: translateX(calc((100vw - 100vh * var(--game-aspect)) / 2 - env(safe-area-inset-right, 0px)));
+          transform: translateX(calc((100vw - (100vh - env(safe-area-inset-bottom, 0px)) * var(--game-aspect)) / 2 - env(safe-area-inset-right, 0px)));
         }
         #mobile-tooltip-panel {
           display: flex;
