@@ -34,13 +34,14 @@
         position: fixed;
         top: 0;
         left: 0;
-        /* width = dead space = viewport_width - canvas_width (canvas_width = vh * game_aspect) */
-        width: calc(100vw - 100vh * var(--game-aspect, 1.6516));
+        /* width = dead space minus right safe-area (canvas no longer extends to screen edge) */
+        width: calc(100vw - 100vh * var(--game-aspect, 1.6516) - env(safe-area-inset-right, 0px));
         height: 100vh;
         background: #0b0d12;
         border-right: 1px solid #1e2633;
         box-sizing: border-box;
-        padding: 10px 6px;
+        /* left padding respects the notch safe-area so text isn't hidden behind it */
+        padding: 10px 6px 10px max(6px, env(safe-area-inset-left, 0px));
         overflow: hidden;
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         z-index: 10;
@@ -55,9 +56,10 @@
       /* Phone landscape: touch device + short viewport (phone, not tablet) + wider than game */
       @media (pointer: coarse) and (max-height: 499px) and (min-aspect-ratio: 1025/620) {
         /* Phaser centers the canvas: marginLeft = deadSpace/2.
-           translateX(deadSpace/2) shifts it right by the same amount → flush right. */
+           translateX(deadSpace/2 - safeRight) shifts it right, keeping the canvas
+           clear of the right safe-area (home indicator / rounded corner zone). */
         canvas {
-          transform: translateX(calc((100vw - 100vh * var(--game-aspect)) / 2));
+          transform: translateX(calc((100vw - 100vh * var(--game-aspect)) / 2 - env(safe-area-inset-right, 0px)));
         }
         #mobile-tooltip-panel {
           display: flex;
