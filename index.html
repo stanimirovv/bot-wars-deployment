@@ -15,14 +15,41 @@
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         overflow: hidden;
       }
+      /* Shared layout variables. --game-aspect is set inline below; the rest
+         live here so they can be tweaked in one place. The env() values resolve
+         to 0px on devices without notch/home-indicator safe areas. */
+      :root {
+        --panel-min: 120px;
+        --sab: env(safe-area-inset-bottom, 0px);
+        --sat: env(safe-area-inset-top, 0px);
+        --sal: env(safe-area-inset-left, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+        /* Available viewport after safe areas. 100dvh follows the dynamic
+           viewport so the canvas/panel auto-resize when mobile browser chrome
+           (URL bar) appears or hides. */
+        --avh: calc(100dvh - var(--sab) - var(--sat));
+        --avw: calc(100vw - var(--sal) - var(--sar));
+        /* Natural letterbox dead-space — horizontal if the viewport is wider
+           than the game's aspect, vertical otherwise. Clamped at 0. */
+        --hdead: max(0px, calc(var(--avw) - var(--avh) * var(--game-aspect, 1.6516)));
+        --vdead: max(0px, calc(var(--avh) - var(--avw) / var(--game-aspect, 1.6516)));
+        /* Panel uses the natural dead space when ample, otherwise the minimum.
+           When the min is taken, the canvas naturally shrinks to fit the
+           remaining space via Phaser's FIT scaler. */
+        --hpanel: max(var(--panel-min), var(--hdead));
+        --vpanel: max(var(--panel-min), var(--vdead));
+      }
+
       #game {
+        position: absolute;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        /* Fallback for browsers without 100dvh (pre-2022 mobile Safari/Chrome). */
         width: 100vw;
-        /* Subtract bottom safe-area so the canvas never overlaps the home indicator.
-           On devices without a safe area env() resolves to 0px — no change. */
-        height: calc(100vh - env(safe-area-inset-bottom, 0px));
+        height: calc(100vh - var(--sab));
+        height: var(--avh);
         touch-action: none;
       }
       canvas {
@@ -30,21 +57,13 @@
         touch-action: none;
       }
 
-      /* Left-side tooltip panel — hidden by default, shown via media query below */
+      /* Tooltip panel — hidden by default; positioned per the active mobile
+         media query (side panel for phones, bottom panel for tablets). */
       #mobile-tooltip-panel {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        /* width = dead space minus right safe-area.
-           Canvas height = (100vh - sab), so canvas width = (100vh - sab) * aspect. */
-        width: calc(100vw - (100vh - env(safe-area-inset-bottom, 0px)) * var(--game-aspect, 1.6516) - env(safe-area-inset-right, 0px));
-        height: calc(100vh - env(safe-area-inset-bottom, 0px));
         background: #0b0d12;
-        border-right: 1px solid #1e2633;
         box-sizing: border-box;
-        /* left padding respects the notch safe-area so text isn't hidden behind it */
-        padding: 10px 6px 10px max(6px, env(safe-area-inset-left, 0px));
         overflow: hidden;
         font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
         z-index: 10;
@@ -56,16 +75,43 @@
         text-align: center;
       }
 
-      /* Phone landscape: touch device + short viewport (phone, not tablet) + wider than game */
-      @media (pointer: coarse) and (max-height: 499px) and (min-aspect-ratio: 1025/620) {
-        /* Phaser centers the canvas: marginLeft = deadSpace/2.
-           translateX(deadSpace/2 - safeRight) shifts it right, keeping the canvas
-           clear of the right safe-area (home indicator / rounded corner zone). */
-        canvas {
-          transform: translateX(calc((100vw - (100vh - env(safe-area-inset-bottom, 0px)) * var(--game-aspect)) / 2 - env(safe-area-inset-right, 0px)));
-        }
+      /* Tablet landscape (or any landscape viewport narrower than the game's
+         1024:620 aspect): tooltip goes BELOW the canvas. Listed first so the
+         phone rule below wins at the exact-aspect boundary. */
+      @media (pointer: coarse) and (orientation: landscape) and (max-aspect-ratio: 1024/620) {
         #mobile-tooltip-panel {
           display: flex;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100vw;
+          height: var(--vpanel);
+          padding: 8px max(6px, var(--sar)) max(8px, var(--sab)) max(6px, var(--sal));
+          border-top: 1px solid #1e2633;
+        }
+        #game {
+          inset: var(--sat) var(--sar) calc(var(--sab) + var(--vpanel)) var(--sal);
+          width: auto;
+          height: auto;
+        }
+      }
+
+      /* Phone landscape (or any landscape viewport wider than the game's
+         1024:620 aspect): tooltip goes on the LEFT of the canvas. */
+      @media (pointer: coarse) and (orientation: landscape) and (min-aspect-ratio: 1024/620) {
+        #mobile-tooltip-panel {
+          display: flex;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          width: var(--hpanel);
+          padding: max(10px, var(--sat)) 6px max(10px, var(--sab)) max(6px, var(--sal));
+          border-right: 1px solid #1e2633;
+        }
+        #game {
+          inset: var(--sat) var(--sar) var(--sab) var(--hpanel);
+          width: auto;
+          height: auto;
         }
       }
       .mtp-title {
@@ -194,7 +240,7 @@
         opacity: 0.8;
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-B5bLzGQE.js"></script>
+    <script type="module" crossorigin src="./assets/index-CFJRtW0Q.js"></script>
   </head>
   <body>
     <script>document.documentElement.style.setProperty('--game-aspect', String(1024 / 620));</script>
